@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 
+import static java.util.Comparator.comparing;
+
 @Service
 public class PriceServiceImpl implements PriceService{
 
@@ -16,8 +18,9 @@ public class PriceServiceImpl implements PriceService{
 
     public Price findApplicablePrice(OffsetDateTime applicationDate, int productId, int brandId) throws NotFoundException {
         return priceRepository
-                .findFirstByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByStartDateDesc(
-                        productId, brandId, applicationDate, applicationDate)
+                .findAllByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(productId, brandId, applicationDate, applicationDate)
+                .stream()
+                .max(comparing(Price::getStartDate))
                 .orElseThrow(NotFoundException::new);
     }
 }

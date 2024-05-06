@@ -10,6 +10,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,8 +49,8 @@ class PriceServiceTest {
         expected.setPriority(0);
         expected.setPrice(BigDecimal.ONE);
         expected.setCurrency("EUR");
-        when(priceRepository.findFirstByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByStartDateDesc(anyInt(), anyInt(), any(), any()))
-                .thenReturn(Optional.of(expected));
+        when(priceRepository.findAllByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(anyInt(), anyInt(), any(), any()))
+                .thenReturn(Collections.singletonList(expected));
         Price price = priceService.findApplicablePrice(OffsetDateTime.now(), 0, 0);
         assertEquals(expected, price);
     }
