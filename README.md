@@ -15,7 +15,7 @@ docker-compose up
 ### 2. API-First Design
 - **Reason**: To prioritize the usability and functionality of the API from the consumer's perspective and ensure that the API contract is agreed upon before development starts.
 - **Impact**: As we auto-generate code based on api definition, this approach help us to reduce potential human errors.
-- **Location**: Documentation is in [here](https://github.com/Raikuro/kairos-assesment/blob/main/src/main/resources/api.yaml). If you launch the app, you will find api documentation [here](http://localhost:8080/swagger-ui/index.html)
+- **Location**: Documentation is [here](https://github.com/Raikuro/kairos-assesment/blob/main/src/main/resources/api.yaml). If you launch the app, you will find api documentation [here](http://localhost:8080/swagger-ui/index.html)
 
 ### 3. UTC Timezone Handling in H2 Database
 - **Reason**: To ensure consistency across different geographic locations and prevent timezone-related issues in date and time calculations.
