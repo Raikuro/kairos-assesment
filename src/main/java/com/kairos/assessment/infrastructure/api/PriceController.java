@@ -2,7 +2,7 @@ package com.kairos.assessment.infrastructure.api;
 
 import com.kairos.assessment.domain.model.Price;
 import com.kairos.assessment.application.PriceService;
-import com.kairos.assessment.infrastructure.mapper.PriceMapper;
+import com.kairos.assessment.infrastructure.api.mapper.ApiMapper;
 import com.kairos.controller.PricesApi;
 import com.kairos.model.PriceResponse;
 import lombok.SneakyThrows;
@@ -22,7 +22,7 @@ public class PriceController implements PricesApi {
     private PriceService priceService;
 
     @Autowired
-    private PriceMapper mapper;
+    private ApiMapper mapper;
 
     @SneakyThrows
     @Override

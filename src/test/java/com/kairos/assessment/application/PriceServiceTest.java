@@ -1,7 +1,8 @@
 package com.kairos.assessment.application;
 
 import com.kairos.assessment.domain.model.Price;
-import com.kairos.assessment.infrastructure.repository.H2JpaPriceRepository;
+import com.kairos.assessment.infrastructure.model.PriceDbo;
+import com.kairos.assessment.infrastructure.repository.PriceRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -11,7 +12,6 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Collections;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,12 +27,12 @@ class PriceServiceTest {
     private PriceServiceImpl priceService;
 
     @Mock
-    private H2JpaPriceRepository priceRepository;
+    private PriceRepository priceRepository;
 
     @Test
-    public void findApplicablePriceNotFoundAnyPrice() throws NotFoundException {
-        when(priceRepository.findFirstByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByStartDateDesc(anyInt(), anyInt(), any(), any()))
-                .thenReturn(Optional.empty());
+    public void findApplicablePrice_butNotFoundAnyPrice() {
+        when(priceRepository.findAllByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(anyInt(), anyInt(), any(), any()))
+                .thenReturn(Collections.emptyList());
         assertThrows(NotFoundException.class,
                 () -> priceService.findApplicablePrice(OffsetDateTime.now(), 0, 0));
     }
@@ -40,7 +40,6 @@ class PriceServiceTest {
     @Test
     public void findApplicablePrice() throws NotFoundException {
         Price expected = new Price();
-        expected.setId(1L);
         expected.setBrandId(1);
         expected.setStartDate(OffsetDateTime.now());
         expected.setEndDate(OffsetDateTime.now());
@@ -49,10 +48,13 @@ class PriceServiceTest {
         expected.setPriority(0);
         expected.setPrice(BigDecimal.ONE);
         expected.setCurrency("EUR");
+
         when(priceRepository.findAllByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(anyInt(), anyInt(), any(), any()))
                 .thenReturn(Collections.singletonList(expected));
-        Price price = priceService.findApplicablePrice(OffsetDateTime.now(), 0, 0);
-        assertEquals(expected, price);
+
+        Price result = priceService.findApplicablePrice(OffsetDateTime.now(), 0, 0);
+
+        assertEquals(expected, result);
     }
 
 }
