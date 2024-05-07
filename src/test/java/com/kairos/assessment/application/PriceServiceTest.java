@@ -51,7 +51,7 @@ class PriceServiceTest {
         when(priceRepository.findAllByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(0,0, now, now))
                 .thenReturn(Collections.singletonList(expected));
 
-        Price result = priceService.findApplicablePrice(OffsetDateTime.now(), 0, 0);
+        Price result = priceService.findApplicablePrice(now, 0, 0);
 
         assertEquals(expected, result);
     }
