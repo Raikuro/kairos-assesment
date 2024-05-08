@@ -1,7 +1,7 @@
 package com.kairos.assessment.application;
 
 import com.kairos.assessment.domain.model.Price;
-import com.kairos.assessment.infrastructure.repository.PriceRepository;
+import com.kairos.assessment.application.repository.PriceRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

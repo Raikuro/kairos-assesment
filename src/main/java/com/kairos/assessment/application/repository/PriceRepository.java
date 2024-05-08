@@ -1,4 +1,4 @@
-package com.kairos.assessment.infrastructure.repository;
+package com.kairos.assessment.application.repository;
 
 import com.kairos.assessment.domain.model.Price;
 

@@ -1,5 +1,6 @@
 package com.kairos.assessment.infrastructure.repository;
 
+import com.kairos.assessment.application.repository.PriceRepository;
 import com.kairos.assessment.domain.model.Price;
 import com.kairos.assessment.infrastructure.model.mapper.DbMapper;
 import org.springframework.beans.factory.annotation.Autowired;
